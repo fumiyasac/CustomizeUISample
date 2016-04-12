@@ -10,8 +10,12 @@ import UIKit
 
 //スクロールビューのタグに使用するenum
 enum ScrollViewTag : Int {
-    case MenuScroll = 0
-    case MainScroll
+    case MenuScroll, MainScroll
+    
+    //状態に対応する値を返す
+    func returnValue() -> Int {
+        return self.rawValue
+    }
 }
 
 //定数設定などその他
@@ -31,32 +35,19 @@ struct ControllersSettings {
 
 class BaseContentsController: UIViewController, UIScrollViewDelegate {
 
-    //メンバ変数
-    var basePosition: Int! = 1
+    //ボタンスクロール時の移動量
+    var scrollButtonOffsetX: Int!
     
     //Outlet接続した部品一覧（ScrollView）
     @IBOutlet var menuScrollView: UIScrollView!
     @IBOutlet var mainScrollView: UIScrollView!
     
-    //ViewControllerをembed segueでつないでいるContainerの配置
-    @IBOutlet var firstContainer: UIView!
-    @IBOutlet var secondContainer: UIView!
-    @IBOutlet var thirdContainer: UIView!
-    @IBOutlet var fourthContainer: UIView!
-    @IBOutlet var fifthContainer: UIView!
-    @IBOutlet var sixthContainer: UIView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-        self.firstContainer.translatesAutoresizingMaskIntoConstraints = true
-        self.secondContainer.translatesAutoresizingMaskIntoConstraints = true
-        self.thirdContainer.translatesAutoresizingMaskIntoConstraints = true
-        self.fourthContainer.translatesAutoresizingMaskIntoConstraints = true
-        self.fifthContainer.translatesAutoresizingMaskIntoConstraints = true
-        self.sixthContainer.translatesAutoresizingMaskIntoConstraints = true
-        */
+        //スクロールビューデリゲート
+        self.menuScrollView.delegate = self
+        self.mainScrollView.delegate = self
     }
     
     //レイアウト処理が完了した際の処理
@@ -68,52 +59,7 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
         self.initMainScrollViewDefinition()
         
         //mainScrollViewの中にContainerを一列に並べて配置する
-        for i in 0...(ControllersSettings.pageScrollNavigationList.count - 1){
-            
-            //各コンテナの位置情報を定義する
-            let pX: CGFloat = CGFloat(Int(self.mainScrollView.frame.width) * i)
-            let pY: CGFloat = CGFloat(0.0)
-            let pW: CGFloat = self.mainScrollView.frame.width
-            let pH: CGFloat = self.mainScrollView.frame.height
-            
-            //各コンテナをコンテンツ用のScrollViewに配置する(もうちょっとエレガントにしたい...)
-            if i == 0 {
-                
-                self.firstContainer.translatesAutoresizingMaskIntoConstraints = true
-                self.firstContainer.frame = CGRectMake(pX, pY, pW, pH)
-                self.mainScrollView.addSubview(self.firstContainer)
-                
-            } else if i == 1 {
-
-                self.secondContainer.translatesAutoresizingMaskIntoConstraints = true
-                self.secondContainer.frame = CGRectMake(pX, pY, pW, pH)
-                self.mainScrollView.addSubview(self.secondContainer)
-                
-            } else if i == 2 {
-                
-                self.thirdContainer.translatesAutoresizingMaskIntoConstraints = true
-                self.thirdContainer.frame = CGRectMake(pX, pY, pW, pH)
-                self.mainScrollView.addSubview(self.thirdContainer)
-                
-            } else if i == 3 {
-
-                self.fourthContainer.translatesAutoresizingMaskIntoConstraints = true
-                self.fourthContainer.frame = CGRectMake(pX, pY, pW, pH)
-                self.mainScrollView.addSubview(self.fourthContainer)
-                
-            } else if i == 4 {
-                
-                self.fifthContainer.translatesAutoresizingMaskIntoConstraints = true
-                self.fifthContainer.frame = CGRectMake(pX, pY, pW, pH)
-                self.mainScrollView.addSubview(self.fifthContainer)
-                
-            } else if i == 5 {
-                
-                self.sixthContainer.translatesAutoresizingMaskIntoConstraints = true
-                self.sixthContainer.frame = CGRectMake(pX, pY, pW, pH)
-                self.mainScrollView.addSubview(self.sixthContainer)
-
-            }
+        for i in 0...(ControllersSettings.pageScrollNavigationList.count - 1) {
             
             //メニュー用のスクロールビューにボタンを配置
             let buttonElement: UIButton! = UIButton()
@@ -121,7 +67,7 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
             
             buttonElement.frame = CGRectMake(
                 CGFloat(Int(self.menuScrollView.frame.width) / 3 * i),
-                CGFloat(0.0),
+                CGFloat(0),
                 CGFloat(Int(self.menuScrollView.frame.width) / 3),
                 self.menuScrollView.frame.height
             )
@@ -129,19 +75,19 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
             buttonElement.setTitle(ControllersSettings.pageScrollNavigationList[i], forState: .Normal)
             buttonElement.titleLabel!.font = UIFont(name: "Bold", size: CGFloat(16))
             buttonElement.tag = i
-            //buttonElement.addTarget(self, action: #selector(ViewController.buttonTapped(_:)), forControlEvents: .TouchUpInside)
+            buttonElement.addTarget(self, action: #selector(BaseContentsController.buttonTapped(_:)), forControlEvents: .TouchUpInside)
             
         }
         
         self.mainScrollView.backgroundColor = UIColor.lightGrayColor()
         self.mainScrollView.contentSize = CGSizeMake(
             CGFloat(Int(self.mainScrollView.frame.width) * ControllersSettings.pageScrollNavigationList.count),
-            CGFloat(self.menuScrollView.frame.height)
+            self.mainScrollView.frame.height - (self.menuScrollView.frame.origin.y + self.menuScrollView.frame.height)
         )
         
         self.menuScrollView.contentSize = CGSizeMake(
             CGFloat(Int(self.menuScrollView.frame.width) * ControllersSettings.pageScrollNavigationList.count / 3),
-            CGFloat(self.menuScrollView.frame.height)
+            self.menuScrollView.frame.height
         )
         
     }
@@ -149,7 +95,7 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
     //Menu用のUIScrollViewの初期化を行う
     func initMenuScrollViewDefinition() {
         
-        self.menuScrollView.tag = ScrollViewTag.MenuScroll.rawValue
+        self.menuScrollView.tag = ScrollViewTag.MenuScroll.returnValue()
         self.menuScrollView.pagingEnabled = false
         self.menuScrollView.scrollEnabled = true
         self.menuScrollView.directionalLockEnabled = false
@@ -157,19 +103,12 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
         self.menuScrollView.showsVerticalScrollIndicator = false
         self.menuScrollView.bounces = false
         self.menuScrollView.scrollsToTop = false
-        
-        //コンテンツサイズの決定
-        self.menuScrollView.contentSize = CGSizeMake(
-            CGFloat(Int(self.menuScrollView.frame.width) * ControllersSettings.pageScrollNavigationList.count / 3),
-            CGFloat(self.menuScrollView.frame.height)
-        )
-        
     }
     
     //Main用のUIScrollViewの初期化を行う
     func initMainScrollViewDefinition() {
         
-        self.mainScrollView.tag = ScrollViewTag.MainScroll.rawValue
+        self.mainScrollView.tag = ScrollViewTag.MainScroll.returnValue()
         self.mainScrollView.pagingEnabled = true
         self.mainScrollView.scrollEnabled = true
         self.mainScrollView.directionalLockEnabled = false
@@ -177,17 +116,78 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
         self.mainScrollView.showsVerticalScrollIndicator = false
         self.mainScrollView.bounces = false
         self.mainScrollView.scrollsToTop = false
+    }
+    
+    //スクロールが発生した際に行われる処理
+    func scrollViewDidScroll(scrollview: UIScrollView) {
         
-        //コンテンツサイズの決定
-        self.mainScrollView.backgroundColor = UIColor.lightGrayColor()
-        self.mainScrollView.contentSize = CGSizeMake(
-            CGFloat(Int(self.mainScrollView.frame.width) * ControllersSettings.pageScrollNavigationList.count),
-            CGFloat(self.menuScrollView.frame.height)
-        )
+        //コンテンツのスクロールのみ検知
+        if scrollview.tag == ScrollViewTag.MainScroll.returnValue() {
+            
+            //現在表示されているページ番号を判別する
+            let pageWidth: CGFloat = self.mainScrollView.frame.width
+            let fractionalPage: Double = Double(self.mainScrollView.contentOffset.x / pageWidth)
+            let page: NSInteger = lround(fractionalPage)
+            
+            //ボタン配置用のスクロールビューもスライドさせる
+            self.moveFormNowButtonContentsScrollView(page)
+            
+        }
         
     }
     
-    //ハンバーガーボタンを押下した際のアクション
+    //ボタンをタップした際に行われる処理
+    func buttonTapped(button: UIButton){
+        
+        //押されたボタンのタグを取得
+        let page: Int = button.tag
+        
+        //コンテンツを押されたボタンに応じて移動する
+        self.moveFormNowDisplayContentsScrollView(page)
+        self.moveFormNowButtonContentsScrollView(page)
+    }
+    
+    //ボタン押下でコンテナをスライドさせる
+    func moveFormNowDisplayContentsScrollView(page: Int) {
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: [], animations: {
+            self.mainScrollView.contentOffset = CGPointMake(
+                CGFloat(Int(self.mainScrollView.frame.width) * page),
+                CGFloat(0)
+            )
+        }, completion: nil)
+        
+    }
+    
+    //ボタンのスクロールビューをスライドさせる
+    func moveFormNowButtonContentsScrollView(page: Int) {
+        
+        //Case1. ボタンを内包しているスクロールビューの位置変更をする
+        if page > 0 && page < (ControllersSettings.pageScrollNavigationList.count - 1) {
+            
+            self.scrollButtonOffsetX = Int(self.menuScrollView.frame.width) / 3 * (page - 1)
+            
+        //Case2. 一番最初のpage番号のときの移動量
+        } else if page == 0 {
+            
+            self.scrollButtonOffsetX = 0
+            
+        //Case3. 一番最後のpage番号のときの移動量
+        } else if page == (ControllersSettings.pageScrollNavigationList.count - 1) {
+            
+            self.scrollButtonOffsetX = Int(self.menuScrollView.frame.width)
+        }
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: [], animations: {
+            self.menuScrollView.contentOffset = CGPointMake(
+                CGFloat(self.scrollButtonOffsetX),
+                CGFloat(0.0)
+            )
+        }, completion: nil)
+        
+    }
+    
+    //@todo:ハンバーガーボタンを押下した際のアクション
     
     
     override func didReceiveMemoryWarning() {
