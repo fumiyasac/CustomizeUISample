@@ -34,7 +34,7 @@ struct ControllersSettings {
 }
 
 class BaseContentsController: UIViewController, UIScrollViewDelegate {
-
+    
     //ボタンスクロール時の移動量
     var scrollButtonOffsetX: Int!
     
@@ -85,6 +85,7 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
             self.mainScrollView.frame.height - (self.menuScrollView.frame.origin.y + self.menuScrollView.frame.height)
         )
         
+        self.menuScrollView.backgroundColor = UIColor.lightGrayColor()
         self.menuScrollView.contentSize = CGSizeMake(
             CGFloat(Int(self.menuScrollView.frame.width) * ControllersSettings.pageScrollNavigationList.count / 3),
             self.menuScrollView.frame.height
@@ -188,7 +189,10 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
     }
     
     //@todo:ハンバーガーボタンを押下した際のアクション
-    
+    @IBAction func viewControllerOpen(sender: AnyObject) {
+        let viewController = self.parentViewController as! ViewController
+        viewController.judgeSideContainer(SideStatus.Opened)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

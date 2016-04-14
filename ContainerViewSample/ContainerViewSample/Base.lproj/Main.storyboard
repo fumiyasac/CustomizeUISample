@@ -35,7 +35,7 @@
                             </containerView>
                             <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rfv-nZ-K3u">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -74,7 +74,27 @@
                     <view key="view" contentMode="scaleToFill" id="v4N-mC-dBZ">
                         <rect key="frame" x="0.0" y="0.0" width="280" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K2l-qX-9H8">
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="F4E-ot-gt7"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="F4E-ot-gt7"/>
+                                    </mask>
+                                </variation>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="K2l-qX-9H8" firstAttribute="top" secondItem="6yy-aW-yHW" secondAttribute="bottom" id="7ba-0o-1ya"/>
+                            <constraint firstItem="K2l-qX-9H8" firstAttribute="leading" secondItem="v4N-mC-dBZ" secondAttribute="leading" id="dmd-Jj-sEV"/>
+                            <constraint firstAttribute="trailing" secondItem="K2l-qX-9H8" secondAttribute="trailing" id="gIe-gy-b4l"/>
+                            <constraint firstItem="eAP-mo-vMb" firstAttribute="top" secondItem="K2l-qX-9H8" secondAttribute="bottom" id="jHp-LX-1an"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jYH-bx-HAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -192,6 +212,9 @@
                                 <state key="normal" title="≡">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="viewControllerOpen:" destination="Zyl-hh-Vuq" eventType="touchUpInside" id="m4l-ha-OX3"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ContainerSample" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4h-Vy-Mpj">
                                 <rect key="frame" x="1710" y="22" width="180" height="30"/>
@@ -199,7 +222,7 @@
                                     <constraint firstAttribute="height" constant="30" id="8Dl-AQ-26d"/>
                                     <constraint firstAttribute="width" constant="180" id="ctm-bA-2Hv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
