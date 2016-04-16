@@ -18,6 +18,13 @@ enum ScrollViewTag : Int {
     }
 }
 
+struct ScrollMenuSetting {
+    
+    //動くラベルに関するセッティング
+    static let slidingLabelY : Int = 36
+    static let slidingLabelH : Int = 4
+}
+
 //定数設定などその他
 struct ControllersSettings {
     
@@ -35,6 +42,9 @@ struct ControllersSettings {
 
 class BaseContentsController: UIViewController, UIScrollViewDelegate {
     
+    //動くラベルの設定
+    var slidingLabel : UILabel!
+    
     //ボタンスクロール時の移動量
     var scrollButtonOffsetX: Int!
     
@@ -44,6 +54,9 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //動くラベルの初期化
+        self.slidingLabel = UILabel()
         
         //スクロールビューデリゲート
         self.menuScrollView.delegate = self
@@ -91,6 +104,16 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
             self.menuScrollView.frame.height
         )
         
+        //動くラベルの配置
+        self.menuScrollView.addSubview(self.slidingLabel)
+        self.menuScrollView.bringSubviewToFront(self.slidingLabel)
+        self.slidingLabel.frame = CGRectMake(
+            CGFloat(0),
+            CGFloat(ScrollMenuSetting.slidingLabelY),
+            CGFloat(self.view.frame.width / 3),
+            CGFloat(ScrollMenuSetting.slidingLabelH)
+        )
+        self.slidingLabel.backgroundColor = UIColor.darkGrayColor()
     }
 
     //Menu用のUIScrollViewの初期化を行う
@@ -132,7 +155,7 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
             
             //ボタン配置用のスクロールビューもスライドさせる
             self.moveFormNowButtonContentsScrollView(page)
-            
+            self.moveToCurrentButtonLabel(page)
         }
         
     }
@@ -146,6 +169,7 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
         //コンテンツを押されたボタンに応じて移動する
         self.moveFormNowDisplayContentsScrollView(page)
         self.moveFormNowButtonContentsScrollView(page)
+        self.moveToCurrentButtonLabel(page)
     }
     
     //ボタン押下でコンテナをスライドさせる
@@ -187,8 +211,23 @@ class BaseContentsController: UIViewController, UIScrollViewDelegate {
         }, completion: nil)
         
     }
+
+    //動くラベルをスライドさせる
+    func moveToCurrentButtonLabel(page: Int) {
+        
+        UIView.animateWithDuration(0.2, delay: 0, options: [], animations: {
+            
+            self.slidingLabel.frame = CGRectMake(
+                CGFloat(Int(self.menuScrollView.frame.width) / 3 * page),
+                CGFloat(ScrollMenuSetting.slidingLabelY),
+                CGFloat(Int(self.menuScrollView.frame.width) / 3),
+                CGFloat(ScrollMenuSetting.slidingLabelH)
+            )
+            
+            }, completion: nil)
+    }
     
-    //@todo:ハンバーガーボタンを押下した際のアクション
+    //ハンバーガーボタンを押下した際のアクション
     @IBAction func viewControllerOpen(sender: AnyObject) {
         let viewController = self.parentViewController as! ViewController
         viewController.judgeSideContainer(SideStatus.Opened)
