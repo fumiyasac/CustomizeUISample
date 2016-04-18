@@ -119,12 +119,12 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         )
         
         //UIPageViewControllerのサイズを変更する
-        //サイズの想定 →（X座標：0, Y座標：[UIScrollViewの高さ], 幅：[おおもとのViewの幅], 高さ：[おおもとのViewの高さ] - [UIScrollViewの高さ]）
+        //サイズの想定 →（X座標：0, Y座標：[UIScrollViewのY座標＋高さ], 幅：[おおもとのViewの幅], 高さ：[おおもとのViewの高さ] - [UIScrollViewのY座標＋高さ]）
         self.pageViewController.view.frame = CGRectMake(
             CGFloat(0),
             CGFloat(self.menuScrollView.frame.origin.y + self.menuScrollView.frame.height),
             CGFloat(self.view.frame.width),
-            CGFloat(self.view.frame.height - self.menuScrollView.frame.height)
+            CGFloat(self.view.frame.height - (self.menuScrollView.frame.origin.y + self.menuScrollView.frame.height))
         )
         self.pageViewController.view.backgroundColor = UIColor.grayColor()
         self.menuScrollView.backgroundColor = UIColor.lightGrayColor()
