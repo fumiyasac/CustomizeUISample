@@ -40,8 +40,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         //コンテナの初期状態を決定
-        self.hiddenButtonSetting(self.sideStatus)
-        
+        self.hiddenButton.alpha = 0
+        self.hiddenButton.enabled = false
+    
         //配置したボタンに押した際のアクションを設定する
         self.hiddenButton.addTarget(self, action: #selector(ViewController.hiddenButtonTapped(_:)), forControlEvents: .TouchUpInside)
     }
@@ -78,7 +79,6 @@ class ViewController: UIViewController {
     
     //コンテナの動きを司るメソッド
     func containerHandlerTapped(status: SideStatus) {
-        self.hiddenButtonSetting(status)
         self.judgeSideContainer(status)
     }
     
@@ -95,16 +95,18 @@ class ViewController: UIViewController {
                     CGFloat(self.mainContainer.frame.width),
                     CGFloat(self.mainContainer.frame.height)
                 )
-                
-            }, completion: { finished in
-                
+
                 self.hiddenButton.frame = CGRectMake(
                     CGFloat(BaseSettings.closedButtonX),
                     CGFloat(self.mainContainer.frame.origin.y),
                     CGFloat(self.mainContainer.frame.width),
                     CGFloat(self.mainContainer.frame.height)
                 )
-                self.hiddenButtonSetting(status)
+                self.hiddenButton.alpha = 0
+                
+            }, completion: { finished in
+                
+                self.hiddenButton.enabled = false
             })
             
         } else {
@@ -117,31 +119,20 @@ class ViewController: UIViewController {
                     CGFloat(self.mainContainer.frame.width),
                     CGFloat(self.mainContainer.frame.height)
                 )
-                
-            }, completion: { finished in
-                
+
                 self.hiddenButton.frame = CGRectMake(
                     CGFloat(BaseSettings.movedButtonX),
                     CGFloat(self.mainContainer.frame.origin.y),
                     CGFloat(self.mainContainer.frame.width),
                     CGFloat(self.mainContainer.frame.height)
                 )
-                self.hiddenButtonSetting(status)
+                self.hiddenButton.alpha = 0.6
+                
+            }, completion: { finished in
+                
+                self.hiddenButton.enabled = true
             })
             
-        }
-        
-    }
-    
-    //コンテナ開閉用ボタンの制御を行う
-    func hiddenButtonSetting(status: SideStatus) {
-        
-        if status == SideStatus.Closed {
-            self.hiddenButton.enabled = false
-            self.hiddenButton.alpha = 0
-        } else {
-            self.hiddenButton.enabled = true
-            self.hiddenButton.alpha = 0.6
         }
         
     }
