@@ -11,13 +11,13 @@ import UIKit
 //テーブルビューに関係する定数
 struct PageSettings {
     
-    //ScrollViewのサイズに関するセッテイング
+    //UIScrollViewのサイズに関するセッテイング
     static let menuScrollViewY : Int = 20
     static let menuScrollViewH : Int = 40
     static let slidingLabelY : Int = 36
     static let slidingLabelH : Int = 4
     
-    //ScrollViewに表示するボタン名称
+    //UIScrollViewに表示するボタン名称
     static let pageScrollNavigationList: [String] = [
         "🔖1番目",
         "🔖2番目",
@@ -27,7 +27,7 @@ struct PageSettings {
         "🔖6番目"
     ]
     
-    //UIPageControllerに配置するUIViewControllerクラスの名称
+    //UIPageViewControllerに配置するUIViewControllerクラスの名称
     static let pageControllerIdentifierList : [String] = [
         "FirstViewController",
         "SecondViewController",
