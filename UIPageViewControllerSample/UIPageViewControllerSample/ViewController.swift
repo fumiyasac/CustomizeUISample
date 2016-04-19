@@ -151,7 +151,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     /**
      * 
-     * UIPageControllerのデリゲートメソッド
+     * UIPageViewControllerDataSourceのメソッドを活用
      *
      */
     
