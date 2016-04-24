@@ -1,0 +1,17 @@
+# CustomizeUISample
+[ING]UIPageVIewControllerとContainerViewを用いた2種類のページスワイプでコンテンツを切り替えて表示するUIのサンプル
+
+こちらはキュレーションメディアアプリ等でよくあるようなUI表現の簡易版をライブラリを使わないで実装した例になります。
+ViewController数が決まっていて、かつメニュー部分が無限スクロールしない形になっています。
+
+![今回のサンプルの画面一覧](https://qiita-image-store.s3.amazonaws.com/0/17400/fc26dfc9-7973-3e89-9ed1-d83e80573093.jpeg)
+
+このリポジトリには下記2つのXCodeファイルをご用意しています。
+
++ UIPageVIewControllerとUIScrollViewを合わせてページ切り替えを表示したサンプル（UIPageVIewControllerSample）
++ ContainerViewとUIScrollViewを合わせてページ切り替えとメインとサブメニューを重ねる表現をしたサンプル（ContainerViewSample）
+
+レイアウトやその他要素の配置に関することに関しては下記のQiita記事にポイント並びに手順をまとめてありますので、ご確認頂ければ幸いです。
+また、是非とも実機などがおありの場合はインストールをして挙動や振る舞いをご確認いただければと思います。
+
+(Qiita) http://qiita.com/fumiyasac@github/items/1244abc8e3286c47ef50
