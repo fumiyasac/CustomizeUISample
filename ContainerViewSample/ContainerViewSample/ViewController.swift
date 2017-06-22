@@ -10,8 +10,8 @@ import UIKit
 
 //サイドのコンテナビューに関するenum
 enum SideStatus {
-    case Opened
-    case Closed
+    case opened
+    case closed
 }
 
 //定数設定などその他
@@ -29,7 +29,7 @@ struct BaseSettings {
 class ViewController: UIViewController {
 
     //メンバ変数
-    var sideStatus : SideStatus! = SideStatus.Closed
+    var sideStatus : SideStatus! = SideStatus.closed
     
     //Outlet接続した部品一覧
     @IBOutlet var hiddenButton: UIButton!
@@ -40,11 +40,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         //コンテナの初期状態を決定
-        self.hiddenButton.alpha = 0
-        self.hiddenButton.enabled = false
+        hiddenButton.alpha = 0
+        hiddenButton.isEnabled = false
     
         //配置したボタンに押した際のアクションを設定する
-        self.hiddenButton.addTarget(self, action: #selector(ViewController.hiddenButtonTapped(_:)), forControlEvents: .TouchUpInside)
+        hiddenButton.addTarget(self, action: #selector(ViewController.hiddenButtonTapped(_:)), for: .touchUpInside)
     }
 
     //レイアウト処理が完了した際の処理
@@ -52,85 +52,85 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         //AutoLayoutで設定したパーツのX座標・Y座標・幅・高さを再定義する
-        self.hiddenButton.frame = CGRectMake(
-            CGFloat(self.hiddenButton.frame.origin.x),
-            CGFloat(self.hiddenButton.frame.origin.y),
-            CGFloat(self.hiddenButton.frame.width),
-            CGFloat(self.hiddenButton.frame.height)
+        hiddenButton.frame = CGRect(
+            x: CGFloat(hiddenButton.frame.origin.x),
+            y: CGFloat(hiddenButton.frame.origin.y),
+            width: CGFloat(hiddenButton.frame.width),
+            height: CGFloat(hiddenButton.frame.height)
         )
-        self.mainContainer.frame = CGRectMake(
-            CGFloat(self.mainContainer.frame.origin.x),
-            CGFloat(self.mainContainer.frame.origin.y),
-            CGFloat(self.mainContainer.frame.width),
-            CGFloat(self.mainContainer.frame.height)
+        mainContainer.frame = CGRect(
+            x: CGFloat(mainContainer.frame.origin.x),
+            y: CGFloat(mainContainer.frame.origin.y),
+            width: CGFloat(mainContainer.frame.width),
+            height: CGFloat(mainContainer.frame.height)
         )
-        self.sideContainer.frame = CGRectMake(
-            CGFloat(self.sideContainer.frame.origin.x),
-            CGFloat(self.sideContainer.frame.origin.y),
-            CGFloat(self.sideContainer.frame.width),
-            CGFloat(self.sideContainer.frame.height)
+        sideContainer.frame = CGRect(
+            x: CGFloat(sideContainer.frame.origin.x),
+            y: CGFloat(sideContainer.frame.origin.y),
+            width: CGFloat(sideContainer.frame.width),
+            height: CGFloat(sideContainer.frame.height)
         )
     }
 
     //ボタンタップ時のメソッド
-    func hiddenButtonTapped(button: UIButton) {
-        self.containerHandlerTapped(SideStatus.Closed)
+    func hiddenButtonTapped(_ button: UIButton) {
+        self.containerHandlerTapped(SideStatus.closed)
     }
     
     //コンテナの動きを司るメソッド
-    func containerHandlerTapped(status: SideStatus) {
+    func containerHandlerTapped(_ status: SideStatus) {
         self.judgeSideContainer(status)
     }
     
     //ステータスに応じてメインコンテナの開閉を決定する
-    func judgeSideContainer(status: SideStatus) {
+    func judgeSideContainer(_ status: SideStatus) {
 
-        if status == SideStatus.Closed {
+        if status == SideStatus.closed {
             
-            UIView.animateWithDuration(0.13, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.13, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
 
-                self.mainContainer.frame = CGRectMake(
-                    CGFloat(BaseSettings.closedMainX),
-                    CGFloat(self.mainContainer.frame.origin.y),
-                    CGFloat(self.mainContainer.frame.width),
-                    CGFloat(self.mainContainer.frame.height)
+                self.mainContainer.frame = CGRect(
+                    x: CGFloat(BaseSettings.closedMainX),
+                    y: CGFloat(self.mainContainer.frame.origin.y),
+                    width: CGFloat(self.mainContainer.frame.width),
+                    height: CGFloat(self.mainContainer.frame.height)
                 )
 
-                self.hiddenButton.frame = CGRectMake(
-                    CGFloat(BaseSettings.closedButtonX),
-                    CGFloat(self.mainContainer.frame.origin.y),
-                    CGFloat(self.mainContainer.frame.width),
-                    CGFloat(self.mainContainer.frame.height)
+                self.hiddenButton.frame = CGRect(
+                    x: CGFloat(BaseSettings.closedButtonX),
+                    y: CGFloat(self.mainContainer.frame.origin.y),
+                    width: CGFloat(self.mainContainer.frame.width),
+                    height: CGFloat(self.mainContainer.frame.height)
                 )
                 self.hiddenButton.alpha = 0
                 
             }, completion: { finished in
                 
-                self.hiddenButton.enabled = false
+                self.hiddenButton.isEnabled = false
             })
             
         } else {
             
-            UIView.animateWithDuration(0.13, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.13, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
 
-                self.mainContainer.frame = CGRectMake(
-                    CGFloat(BaseSettings.movedMainX),
-                    CGFloat(self.mainContainer.frame.origin.y),
-                    CGFloat(self.mainContainer.frame.width),
-                    CGFloat(self.mainContainer.frame.height)
+                self.mainContainer.frame = CGRect(
+                    x: CGFloat(BaseSettings.movedMainX),
+                    y: CGFloat(self.mainContainer.frame.origin.y),
+                    width: CGFloat(self.mainContainer.frame.width),
+                    height: CGFloat(self.mainContainer.frame.height)
                 )
 
-                self.hiddenButton.frame = CGRectMake(
-                    CGFloat(BaseSettings.movedButtonX),
-                    CGFloat(self.mainContainer.frame.origin.y),
-                    CGFloat(self.mainContainer.frame.width),
-                    CGFloat(self.mainContainer.frame.height)
+                self.hiddenButton.frame = CGRect(
+                    x: CGFloat(BaseSettings.movedButtonX),
+                    y: CGFloat(self.mainContainer.frame.origin.y),
+                    width: CGFloat(self.mainContainer.frame.width),
+                    height: CGFloat(self.mainContainer.frame.height)
                 )
                 self.hiddenButton.alpha = 0.6
                 
             }, completion: { finished in
                 
-                self.hiddenButton.enabled = true
+                self.hiddenButton.isEnabled = true
             })
             
         }
