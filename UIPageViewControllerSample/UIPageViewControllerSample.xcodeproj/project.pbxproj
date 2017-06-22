@@ -219,13 +219,17 @@
 				TargetAttributes = {
 					DE68EA7C1CAF8E7900F3ED17 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = S5BF5553KY;
+						LastSwiftMigration = 0830;
 					};
 					DE68EA901CAF8E7A00F3ED17 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0830;
 						TestTargetID = DE68EA7C1CAF8E7900F3ED17;
 					};
 					DE68EA9B1CAF8E7A00F3ED17 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0830;
 						TestTargetID = DE68EA7C1CAF8E7900F3ED17;
 					};
 				};
@@ -431,10 +435,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S5BF5553KY;
 				INFOPLIST_FILE = UIPageViewControllerSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.just1factory.UIPageViewControllerSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -442,10 +448,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S5BF5553KY;
 				INFOPLIST_FILE = UIPageViewControllerSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.just1factory.UIPageViewControllerSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -457,6 +465,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.just1factory.UIPageViewControllerSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIPageViewControllerSample.app/UIPageViewControllerSample";
 			};
 			name = Debug;
@@ -469,6 +478,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.just1factory.UIPageViewControllerSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIPageViewControllerSample.app/UIPageViewControllerSample";
 			};
 			name = Release;
@@ -480,6 +490,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.just1factory.UIPageViewControllerSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = UIPageViewControllerSample;
 			};
 			name = Debug;
@@ -491,6 +502,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.just1factory.UIPageViewControllerSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = UIPageViewControllerSample;
 			};
 			name = Release;
@@ -514,6 +526,7 @@
 				DE68EAA71CAF8E7A00F3ED17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DE68EAA81CAF8E7A00F3ED17 /* Build configuration list for PBXNativeTarget "UIPageViewControllerSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +535,7 @@
 				DE68EAAA1CAF8E7A00F3ED17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DE68EAAB1CAF8E7A00F3ED17 /* Build configuration list for PBXNativeTarget "UIPageViewControllerSampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +544,7 @@
 				DE68EAAD1CAF8E7A00F3ED17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
